@@ -142,7 +142,7 @@ def get_product():
             return Response("Not authorized", status=401, mimetype='application/json')
 
 
-@app.route('/addToCart', methods=['GET'])
+@app.route('/addToCart', methods=['POST'])
 def add_to_cart():
     # Request JSON data
     data = None
