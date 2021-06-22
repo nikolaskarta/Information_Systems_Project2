@@ -86,7 +86,7 @@ def login():
         return Response("Wrong email or password, please try again.", mimetype='application/json', status=400)
 
 
-@app.route('/getProduct', methods=['POST'])
+@app.route('/getProduct', methods=['GET'])
 def get_product():
     data = None
     try:
@@ -142,7 +142,7 @@ def get_product():
             return Response("Not authorized", status=401, mimetype='application/json')
 
 
-@app.route('/addToCart', methods=['POST'])
+@app.route('/addToCart', methods=['GET'])
 def add_to_cart():
     # Request JSON data
     data = None
@@ -208,23 +208,25 @@ def delete_items():
 
         delFound = False
         delIndex = 0
+        if delsearch:
+            for x in range(len(rawItems)):
+                if delsearch['name'] == rawItems[x]:
+                    delFound = True
+                    delIndex = x
 
-        for x in range(len(rawItems)):
-            if delsearch['name'] == rawItems[x]:
-                delFound = True
-                delIndex = x
+            if delFound:
 
-        if delFound:
-
-            rawItems.pop(int(delIndex))
+                rawItems.pop(int(delIndex))
             
-            cart['Items'].pop(x)
+                cart['Items'].pop(x)
             
-            cart['Total Cost'] = cart['Total Cost'] - float(delsearch['price'])*float(rawQty[x])
-            rawQty.pop(int(delIndex))
-            return Response(json.dumps(cart), status=200, mimetype='application/json')
+                cart['Total Cost'] = cart['Total Cost'] - float(delsearch['price'])*float(rawQty[x])
+                rawQty.pop(int(delIndex))
+                return Response(json.dumps(cart), status=200, mimetype='application/json')
+            else:
+                return Response("Product not in cart", status=401, mimetype='application/json')
         else:
-            return Response("Product not in cart", status=401, mimetype='application/json')
+            return Response("Product doesn't exist", status=401, mimetype='application/json')
     else:
         return Response("Not authorized", status=401, mimetype='application/json')
 
