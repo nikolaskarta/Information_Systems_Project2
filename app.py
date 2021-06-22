@@ -21,6 +21,7 @@ app = Flask(__name__)
 users_sessions = {}
 
 cart = {"Items": [], "Total Cost": 0}
+receipt = {}
 rawItems = []
 rawQty = []
 globalEmail = ""
@@ -263,8 +264,9 @@ def purchase_cart():
                 {"email": f"{globalEmail}"},
                 {"$push": {"orderHistory": f"{cart}"}}
             )
-            
-            return Response(json.dumps(cart), status=200, mimetype="application/json")
+            receipt=cart
+            cart.clear()
+            return Response(json.dumps(receipt), status=200, mimetype="application/json")
 
         else:
             return Response("Invalid card information", status=400, mimetype="application/json")
