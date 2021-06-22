@@ -320,7 +320,7 @@ def insert_product():
 
     uuid = request.headers.get('authorization')
     if is_session_valid(uuid):
-        userinfocursor = users.find_one({"email":f"{data['email']}"})
+        userinfocursor = users.find_one({"email":f"{globalEmail}"})
         userinfosearch = json.loads(json_util.dumps(userinfocursor))
 
         if userinfosearch['category'] == "admin":
@@ -354,7 +354,7 @@ def delete_product():
 
     uuid = request.headers.get('authorization')
     if is_session_valid(uuid):
-        userinfocursor = users.find_one({"email": f"{data['email']}"})
+        userinfocursor = users.find_one({"email": f"{globalEmail}"})
         userinfosearch = json.loads(json_util.dumps(userinfocursor))
 
         if userinfosearch['category'] == "admin":
@@ -388,7 +388,7 @@ def modify_product():
 
     uuid = request.headers.get('authorization')
     if is_session_valid(uuid):
-        userinfocursor = users.find_one({"email":f"{data['email']}"})
+        userinfocursor = users.find_one({"email":f"{globalEmail}"})
         userinfosearch = json.loads(json_util.dumps(userinfocursor))
 
         if userinfosearch['category'] == "admin":
