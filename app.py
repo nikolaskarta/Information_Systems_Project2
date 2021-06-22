@@ -224,9 +224,9 @@ def delete_items():
                 rawQty.pop(int(delIndex))
                 return Response(json.dumps(cart), status=200, mimetype='application/json')
             else:
-                return Response("Product not in cart", status=401, mimetype='application/json')
+                return Response("Product not in cart", status=400, mimetype='application/json')
         else:
-            return Response("Product doesn't exist", status=401, mimetype='application/json')
+            return Response("Product doesn't exist", status=400, mimetype='application/json')
     else:
         return Response("Not authorized", status=401, mimetype='application/json')
 
