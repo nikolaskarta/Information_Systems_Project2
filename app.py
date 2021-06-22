@@ -86,7 +86,7 @@ def login():
         return Response("Wrong email or password, please try again.", mimetype='application/json', status=400)
 
 
-@app.route('/getProduct', methods=['GET'])
+@app.route('/getProduct', methods=['POST'])
 def get_product():
     data = None
     try:
