@@ -6,6 +6,7 @@ from bson import json_util
 from bson.objectid import ObjectId
 import uuid
 import time
+from copy import deepcopy
 
 # Connect to our local MongoDB
 client = MongoClient('mongodb://localhost:27017/')
@@ -264,7 +265,7 @@ def purchase_cart():
                 {"email": f"{globalEmail}"},
                 {"$push": {"orderHistory": f"{cart}"}}
             )
-            receipt=cart
+            receipt=deepcopy(cart)
             cart.clear()
             return Response(json.dumps(receipt), status=200, mimetype="application/json")
 
